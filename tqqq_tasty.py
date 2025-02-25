@@ -167,6 +167,7 @@ def get_position(session_token):
 def rebalance(session_token):
     """
     Rebalance the TQQQ position to maintain the fixed allocation value.
+    If no position exists, buy shares worth the fixed allocation.
     If the position value exceeds the fixed allocation, sell shares.
     If the position value is below the fixed allocation, buy shares.
 
@@ -180,6 +181,16 @@ def rebalance(session_token):
     """
     # Get current position information
     quantity, _, current_price = get_position(session_token)
+    
+    # If no position exists, buy shares worth the fixed allocation
+    if quantity == 0:
+        # Calculate number of shares to buy (round down to nearest whole share)
+        shares_to_buy = int(fixed_allocation / current_price)
+        if shares_to_buy > 0:
+            return 'BUY', shares_to_buy
+        else:
+            logger.warning(f"Current price {current_price} too high for minimum 1 share purchase with allocation {fixed_allocation}")
+            return None, 0
     
     # Calculate current position value
     current_value = abs(quantity) * current_price
