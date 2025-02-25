@@ -1,0 +1,4 @@
+
+# Ignore dynaconf secret files
+.secrets.*
+C:\Users\marwi\PycharmProjects\tqqq_rebalancing\__pycache__
