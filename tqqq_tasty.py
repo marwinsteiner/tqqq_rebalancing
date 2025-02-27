@@ -42,7 +42,7 @@ logger.add(log_file, rotation="1 day")
 EnvironmentType = Literal['sandbox', 'production']  # create a type alias
 
 # ENVIRONMENT toggles between sandbox (testing) and production (live trading)
-ENVIRONMENT: EnvironmentType = 'sandbox'
+ENVIRONMENT: EnvironmentType = settings.ENVIRONMENT
 logger.info(f'Using environment: {ENVIRONMENT}')
 
 fixed_allocation = 2000  # dollar value of my fixed allocation to TQQQ.
